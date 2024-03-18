@@ -1,0 +1,154 @@
+{{template "admin" .}}
+
+{{define "title"}}
+    <title>Services</title>
+{{end}}
+
+{{define "css"}}
+<style>
+    .custom-text-color{
+        color: rgb(0, 0, 0);
+    }
+</style>
+{{end}}
+
+{{define "content"}}
+    {{$flag := index .Data "sub"}}
+    {{$currMain := index .Data "current_main"}}
+    {{$currSub := index .Data "current_sub"}}
+    {{$subList := index .Data "sub_list"}}
+    {{$serviceList := index .Data "service_list"}}
+
+    <!-- if $flag == "sub" 
+
+            $type : "Sub Category"
+            $subType : "Services"
+
+            $currItem = current_sub
+            $childItem = current_services
+        else
+            $type : "Category"
+            $subType : "Sub Category"
+
+            $currItem = current_main
+            $childItem = current_sub 
+        end
+    -->
+    
+    {{$type := "Category"}}
+    {{$subType := "Sub Category"}}
+    {{$currItem := index .Data "current_main"}}
+    {{$currList := index .Data "sub_list"}}
+    
+    {{if eq $flag "sub"}}
+        {{$type = "Sub Category"}}
+        {{$subType = "Services"}}
+        {{$currItem = index .Data "current_sub"}}
+        {{$currList = index .Data "service_list"}}
+    {{end}}
+
+    <div class="main-panel">
+        <div class="container">    
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="d-flex justify-content-center text-center text-info font-weight-bold">
+                        <span class="custom-text-color">{{$currItem.Name}}</span>
+                    </div>
+                    
+                    <table class="table table-sm table-dark">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">{{$type}}</th>
+                                <th class="text-center">Update At</th>
+                                <th class="text-center">Created At</th>
+                                {{if eq $flag "sub"}}
+                                <th class="text-center">CategoryID</th>
+                                {{end}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">
+                                    {{$currItem.ID}}
+                                </td>
+                                <td class="text-center">
+                                    {{$currItem.Name}}
+                                </td>
+                                <td class="text-center">
+                                    {{dateOnly $currItem.UpdatedAt}}
+                                </td>
+                                <td class="text-center">
+                                    {{dateOnly $currItem.CreatedAt}}
+                                </td>
+                                {{if eq $flag "sub"}}
+                                <td class="text-center">
+                                    {{$currItem.CategoryID}}
+                                </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-warning" href="/private/admin/sub-category/{{$currMain.ID}}/{{$currSub.ID}}/update">Edit</a>
+                                    </td>
+                                {{else}}
+                                    <td class="text-center">
+                                        <a class="btn btn-warning" href="/private/admin/category/{{$currMain.ID}}/update">Edit</a>
+                                    </td>
+                                {{end}}
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <!-- Sub Items list -->
+                    <h5>Available {{$subType}}:</h5>
+                    <table class="table table-sm table-dark">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">{{$subType}}</th>
+                                <th class="text-center">Update At</th>
+                                <th class="text-center">Created At</th>
+                                <th class="text-center">Category</th>
+                                {{if eq $flag "sub"}}
+                                <th class="text-center">SubCategory</th>
+                                {{end}}
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                            {{range $currList}}
+                                <tr>
+                                    <td class="text-center">
+                                        {{.ID}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{.Name}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{dateOnly .UpdatedAt}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{dateOnly .CreatedAt}}
+                                    </td>
+                                    <td class="text-center">
+                                        {{.CategoryID}}
+                                    </td>
+                                    {{if eq $flag "sub"}}
+                                    <td class="text-center">
+                                        {{.SubCategoryID}}
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-warning" href="/private/admin/service/{{$currMain.ID}}/{{$currSub.ID}}/{{.ID}}/update">Edit</a>
+                                    </td>
+                                    {{else}}
+                                    <td class="text-center">
+                                        <a class="btn btn-warning" href="/private/admin/sub-category/{{$currMain.ID}}/{{.ID}}/update">Edit</a>
+                                    </td>
+                                    {{end}}
+                                </tr>
+                            {{end}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}

@@ -1,0 +1,1 @@
+delete from service_category_sub

@@ -1,0 +1,56 @@
+{{template "admin" .}}
+
+{{define "title"}}
+<title>New Category</title>
+{{end}}
+
+{{define "content"}}
+
+<div class="main-panel">
+    {{$category := index .Data "current_main_category"}}
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title text-center">New Category Details</h4>
+            <p class="card-description"></p>
+            <form action="/private/admin/category/add-new" method="post" enctype="multipart/form-data" class="forms-sample" novalidate>
+              <input type="hidden" id="csrf_token" name="csrf_token" value={{.CSRFToken}}>
+                       
+              <div class="form-group">
+                <label for="category_name">Category Name</label>
+                {{with .Form.Err.Get "category_name"}}
+                        <label class="text-info">{{.}}</label>
+                {{end}}
+                <input type="text" class="form-control {{with .Form.Err.Get "category_name"}} is-invalid {{end}}" id="category_name" name="category_name" {{if (eq $category.Name "")}} placeholder="Enter Name" {{else}} value="{{$category.Name}}" {{end}} required />
+              </div>
+              <div class="form-group">
+                <label for="category_description">Description</label>
+                {{with .Form.Err.Get "category_description"}}
+                        <label class="text-info">{{.}}</label>
+                {{end}}
+                <textarea
+                class="form-control {{with .Form.Err.Get "category_description"}} is-invalid {{end}}"
+                  id="category_description" name="category_description"
+                  rows="4"
+                required>{{$category.Description}}</textarea>
+              </div>
+              <div class="form-group">
+                <label for="category_thumbnail" class="mr-4">Thumbnail</label>
+                {{with .Form.Err.Get "category_thumbnail"}}
+                        <label class="text-info">{{.}}</label>
+                {{end}}
+                <input type="file" id="category_thumbnail" name="category_thumbnail"  accept="image/*" class="form-control {{with .Form.Err.Get "category_thumbnail"}} is-invalid {{end}}" required />
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary mr-2"> Submit </button>
+                <a href="/private/admin/dashboard" class="btn btn-warning">Cancel</a>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+{{end}}

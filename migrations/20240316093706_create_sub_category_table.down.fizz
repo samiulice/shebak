@@ -1,0 +1,1 @@
+drop_table("service_category_sub")

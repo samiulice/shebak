@@ -1,0 +1,74 @@
+{{template "admin" .}}
+
+{{define "title"}}
+<title>New Sub Category</title>
+{{end}}
+
+{{define "content"}}
+{{$subCategory := index .Data "current_sub_category"}}
+<div class="main-panel">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title text-center">New Sub Category Details</h4>
+            <p class="card-description"></p>
+            <form action="/private/admin/sub-category/add-new" method="post" enctype="multipart/form-data" class="forms-sample" novalidate>
+              <input type="hidden" id="csrf_token" name="csrf_token" value={{.CSRFToken}} >
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label class="mr-4" for="seleced_category">Category</label>
+                    <select  id="seleced_category" class="form-control bg-dark text-white {{with .Form.Err.Get "seleced_category"}} is-invalid {{end}}"  name="seleced_category" required>
+                      <option value="0" disabled selected>Select an option</option>
+                        {{range .CategoryMain}}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{end}}
+                    </select>
+                    {{with .Form.Err.Get "seleced_category"}}
+                      <label class="text-info">{{.}}</label>
+                    {{end}}
+                  </div>
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+              </div>
+              
+              <div class="form-group">
+                <label for="sub_category_name">Sub-Category Name</label>
+                {{with .Form.Err.Get "sub_category_name"}}
+                  <label class="text-info">{{.}}</label>
+                {{end}}
+                <input type="text" class="form-control {{with .Form.Err.Get "sub_category_name"}} is-invalid {{end}}" id="sub_category_name" name="sub_category_name" {{if (eq $subCategory.Name "") }} placeholder="Enter Name" {{else}} value ="{{$subCategory.Name}}" {{end}} required/>
+              </div>
+              <div class="form-group">
+                <label for="sub_category_description">Description</label>
+                {{with .Form.Err.Get "sub_category_description"}}
+                  <label class="text-info">{{.}}</label>
+                {{end}}
+                <textarea
+                  class="form-control {{with .Form.Err.Get "sub_category_description"}} is-invalid {{end}}"
+                  id="sub_category_description" name="sub_category_description"
+                  rows="4"
+                required>{{$subCategory.Description}}</textarea>
+              </div>
+              <div class="form-group">
+                <label for="sub_category_thumbnail" class="mr-4">Thumbnail</label>
+                {{with .Form.Err.Get "sub_category_thumbnail"}}
+                  <label class="text-info">{{.}}</label>
+                {{end}}
+                <input type="file" id="sub_category_thumbnail" name="sub_category_thumbnail" class="form-control {{with .Form.Err.Get "sub_category_thumbnail"}} is-invalid {{end}}" required/>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary mr-2"> Submit </button>
+                <a href="/private/admin/dashboard" class="btn btn-warning">Cancel</a>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+{{end}}

@@ -1,0 +1,20 @@
+create_table("service") {
+    t.Column("id", "integer", {primary: true})
+    t.Column("name", "string", {"default":""})
+    t.Column("available", "integer", {"default":1})
+    t.Column("minimum_charge", "integer", {"default":0})
+    t.Column("category_id", "integer", {})
+    t.Column("sub_category_id", "integer", {})
+    t.Column("description", "string", {"default":""})
+    t.Column("thumbnail", "string", {"default":""})
+    t.Column("country", "string", {"default":"Bangladesh"})
+    t.Column("division", "string", {"default":""})
+    t.Column("district", "string", {"default":""})
+    t.Column("city", "string", {"default":""})
+    t.Column("created_at", "date", {})
+    t.Column("updated_at", "date", {})
+    t.ForeignKey("category_id", {"service_category_main":["id"]}, {
+        "on_delete": "cascade",
+        "on_update": "cascade",
+    })
+}

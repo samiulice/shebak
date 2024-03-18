@@ -1,0 +1,5 @@
+INSERT INTO public.service(name, available, minimum_charge, category_id, sub_category_id, description, thumbnail, division, district, city, created_at, updated_at) VALUES
+('Desktop Windows setup', 1, 100, 2, 1, 'We carefully repair your Desktop', 'pc_repair0001.png', 'Mymensingh', 'Netrakona', 'Mohangonj', '2024-02-05 00:00:00',	'2024-02-05 00:00:00'),
+('Desktop Motherboard Repair', 1, 500, 2, 1, 'We carefully repair your Desktop', 'pc_repair0001.png', 'Mymensingh', 'Netrakona', 'Netrakona', '2024-02-05 00:00:00',	'2024-02-05 00:00:00'),
+('Dust cleanning', 1, 100, 1, 3, 'We carefully clean you ac', 'ac_repair0001.png', 'Mymensingh', 'Netrakona', 'Mohangonj', '2024-02-05 00:00:00',	'2024-02-05 00:00:00'),
+('Dust cleanning', 1, 100, 1, 3, 'We carefully clean you ac', 'ac_repair0001.png', 'Mymensingh', 'Netrakona', 'Netrakona', '2024-02-05 00:00:00',	'2024-02-05 00:00:00');

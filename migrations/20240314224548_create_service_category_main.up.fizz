@@ -1,0 +1,9 @@
+create_table("service_category_main") {
+  t.Column("id", "integer", {primary: true})
+  t.Column("name", "string", {"default": ""})
+  t.Column("available", "integer", {"default": 1})
+  t.Column("description", "string", {"default": ""})
+  t.Column("thumbnail", "string", {"default": ""})
+  t.Column("created_at", "date", {})
+  t.Column("updated_at", "date", {})
+}
